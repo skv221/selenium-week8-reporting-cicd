@@ -1,0 +1,16 @@
+{
+    "browserstack": {
+      "username": "venkatesansk_MN6giD",
+      "access_key": "zCcYqvoMz8ELy8T74YNd"
+    },
+    "capabilities": {
+      "browser": "Edge",
+      "browser_version": "latest",
+      "os": "Windows",
+      "os_version": "11",
+      "build": "Report Testing",
+      "name": "Automation and Advanced Integration",
+      "debug": "false"
+    }
+  }
+  

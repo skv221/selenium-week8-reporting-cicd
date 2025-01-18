@@ -1,0 +1,8 @@
+selenium
+pytest
+pytest-html
+openpyxl
+jsonschema
+webdriver-manager
+browserstack-sdk
+allure-pytest

@@ -1,0 +1,21 @@
+{
+    "browser": {
+      "type": "cloud",
+      "headless": true,
+      "implicit_wait": 10,
+      "sleep_time": 3
+    },
+    "driver_paths": {
+      "chrome_driver": "driver/chromedriver.exe"
+    },
+    "test_data": {
+      "data_source": "excel",
+      "file_path": "test_data/Test Data.xlsx",
+      "TC_1_sheet_name": "LoginData",
+      "TC_2_sheet_name": "ShoppingData"
+    },
+    "environment": {
+      "base_url": "https://www.saucedemo.com/"
+    }
+  }
+  
