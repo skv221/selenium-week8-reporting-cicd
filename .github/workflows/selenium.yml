@@ -36,7 +36,7 @@ jobs:
 
       # Step 5: Run Selenium Tests and Generate Allure Results
       - name: Run Tests
-        run: pytest .\test_cases\test_login.py --alluredir=reports/allure-report --html=reports/report.html
+        run: pytest test_cases/test_login.py --alluredir=reports/allure-report --html=reports/report.html
 
       # Step 6: Install Allure
       - name: Install Allure
