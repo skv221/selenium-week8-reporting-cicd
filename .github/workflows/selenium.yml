@@ -52,10 +52,6 @@ jobs:
           # Move Allure to a directory in PATH
           sudo mv allure /opt/allure
           sudo ln -s /opt/allure/bin/allure /usr/local/bin/allure
-          
-          # Verify installation
-          allure --version
-
 
       # Step 6: Generate Allure Report
       - name: Generate Allure Report
