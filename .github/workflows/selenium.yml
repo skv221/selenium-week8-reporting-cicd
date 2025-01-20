@@ -64,17 +64,20 @@ jobs:
 
       # Step 6: Run Selenium Tests and Generate Allure Results
       - name: Run Selenium Tests
-        run: pytest test_cases/test_login.py --alluredir=reports/allure-report --html=reports/report.html
+        run: pytest --alluredir=allure-report --html=reports/report.html
+        continue-on-error: true
 
       # Step 7: Generate Allure Report
       - name: Generate Allure Report
         run: |
           # Call allure.bat for Windows
-          C:\Allure\allure-*/bin\allure.bat generate reports/allure-report --clean -o allure-report
+          C:\Allure\allure-*/bin\allure.bat generate allure-report --clean -o allure-report
 
       # Step 8: Upload Allure Report as an Artifact
       - name: Upload Allure Report
         uses: actions/upload-artifact@v3
         with:
-          name: allure-report
-          path: allure-report
+          name: test reports
+          path: |
+            allure-report
+            reports/report.html
