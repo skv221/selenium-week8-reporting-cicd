@@ -27,29 +27,31 @@ jobs:
       - name: Install Dependencies
         run: pip install -r requirements.txt
 
-      # Step 4: Set up WebDriver
-      - name: Set up WebDriver
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y chromium-chromedriver
-          sudo ln -s /usr/bin/chromedriver /usr/local/bin/chromedriver
-
-      # Step 5: Run Selenium Tests and Generate Allure Results
+      # Step 4: Run Selenium Tests and Generate Allure Results
       - name: Run Tests
         run: pytest test_cases/test_login.py --alluredir=reports/allure-report --html=reports/report.html
 
-      # Step 6: Install Allure
+      # Step 5: Install Allure
       - name: Install Allure
         run: |
-          sudo apt-add-repository ppa:qameta/allure -y
-          sudo apt-get update
-          sudo apt-get install allure -y
+          # Download Allure
+          curl -o allure.zip -L https://github.com/allure-framework/allure2/releases/latest/download/allure-2.20.1.zip
+    
+          # Unzip Allure
+          unzip allure.zip -d allure
+    
+          # Move Allure to a directory in PATH
+          sudo mv allure /opt/allure
+          sudo ln -s /opt/allure/bin/allure /usr/local/bin/allure
+    
+          # Verify installation
+          allure --version
 
-      # Step 7: Generate Allure Report
+      # Step 6: Generate Allure Report
       - name: Generate Allure Report
         run: allure generate reports/allure-report --clean -o allure-report
 
-      # Step 8: Upload Allure Report as an Artifact
+      # Step 7: Upload Allure Report as an Artifact
       - name: Upload Allure Report
         uses: actions/upload-artifact@v3
         with:
