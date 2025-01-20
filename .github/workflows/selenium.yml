@@ -10,7 +10,7 @@ on:
 
 jobs:
   selenium-tests:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       # Step 1: Checkout the repository
@@ -35,23 +35,23 @@ jobs:
       - name: Install Allure
         run: |
           # Fetch the latest Allure release URL
-          LATEST_URL=$(curl -s https://api.github.com/repos/allure-framework/allure2/releases/latest | grep browser_download_url | grep zip | cut -d '"' -f 4)
+          $LATEST_URL = (Invoke-RestMethod -Uri https://api.github.com/repos/allure-framework/allure2/releases/latest).assets | Where-Object { $_.name -like "*.zip" } | Select-Object -ExpandProperty browser_download_url
           
           # Download Allure
-          curl -o allure.zip -L $LATEST_URL
+          Invoke-WebRequest -Uri $LATEST_URL -OutFile allure.zip
           
           # Verify the file
-          if [ $(stat --format="%s" allure.zip) -lt 100000 ]; then
-            echo "Error: Downloaded file size is too small, indicating a failed download."
+          if ((Get-Item allure.zip).length -lt 100000) {
+            Write-Host "Error: Downloaded file size is too small, indicating a failed download."
             exit 1
-          fi
+          }
           
           # Unzip Allure
-          unzip allure.zip -d allure
+          Expand-Archive -Path allure.zip -DestinationPath allure
           
           # Move Allure to a directory in PATH
-          sudo mv allure /opt/allure
-          sudo ln -s /opt/allure/bin/allure /usr/local/bin/allure
+          Move-Item -Path allure -Destination C:\allure
+          New-Item -Path C:\allure\bin\allure -Name allure -ItemType SymbolicLink -Target C:\allure\bin\allure.bat
 
       # Step 6: Generate Allure Report
       - name: Generate Allure Report
