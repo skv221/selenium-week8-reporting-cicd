@@ -1,6 +1,6 @@
 {
     "browser": {
-      "type": "cloud",
+      "type": "edge",
       "headless": true,
       "implicit_wait": 10,
       "sleep_time": 3
