@@ -1,7 +1,7 @@
 {
     "browserstack": {
-      "username": "venkatesansk_MN6giD",
-      "access_key": "zCcYqvoMz8ELy8T74YNd"
+      "username": "YOUR_BS_USER_NAME",
+      "access_key": "YOUR_BS_ACCESS_KEY"
     },
     "capabilities": {
       "browser": "Edge",
