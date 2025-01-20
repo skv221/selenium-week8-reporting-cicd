@@ -45,12 +45,16 @@ jobs:
           # Unzip Allure
           Expand-Archive -Path allure.zip -DestinationPath C:\Allure
 
-      # Step 5: Verify Allure installation
+          # List contents of the directory for debugging purposes
+          Get-ChildItem -Path C:\Allure
+
+      # Step 5: Verify Allure Installation
       - name: Verify Allure Installation
         run: |
-          # Check if Allure binary exists in C:\Allure
-          if (Test-Path "C:\Allure\allure-*/bin/allure.exe") {
-            Write-Host "Allure is successfully installed."
+          # Check if Allure binary exists
+          $allurePath = Get-ChildItem -Path "C:\Allure\allure-*/bin" -Recurse | Where-Object { $_.Name -eq "allure.exe" }
+          if ($allurePath) {
+            Write-Host "Allure is successfully installed at: $($allurePath.FullName)"
           } else {
             Write-Host "Error: Allure is not installed properly."
             exit 1
