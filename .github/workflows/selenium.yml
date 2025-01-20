@@ -1,0 +1,57 @@
+name: Selenium CI with Allure Reports
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  selenium-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      # Step 3: Install dependencies
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      # Step 4: Set up WebDriver
+      - name: Set up WebDriver
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-chromedriver
+          sudo ln -s /usr/bin/chromedriver /usr/local/bin/chromedriver
+
+      # Step 5: Run Selenium Tests and Generate Allure Results
+      - name: Run Tests
+        run: pytest --alluredir=reports/allure-report --html=reports/report.html
+
+      # Step 6: Install Allure
+      - name: Install Allure
+        run: |
+          sudo apt-add-repository ppa:qameta/allure -y
+          sudo apt-get update
+          sudo apt-get install allure -y
+
+      # Step 7: Generate Allure Report
+      - name: Generate Allure Report
+        run: allure generate reports/allure-report --clean -o allure-report
+
+      # Step 8: Upload Allure Report as an Artifact
+      - name: Upload Allure Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-report
+          path: allure-report
