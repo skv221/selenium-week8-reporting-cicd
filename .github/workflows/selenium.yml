@@ -47,13 +47,13 @@ jobs:
 
           # Debugging: List the contents of the directory after extraction
           Write-Host "Contents of C:\Allure after extraction:"
-          Get-ChildItem -Path C:\Allure\allure-2.32.0\bin
+          Get-ChildItem -Path C:\Allure
 
       # Step 5: Verify Allure Installation
       - name: Verify Allure Installation
         run: |
-          # Check for allure.exe in the extracted folder
-          $allurePath = Get-ChildItem -Path "C:\Allure\allure-*/bin" -Recurse | Where-Object { $_.Name -eq "allure.exe" }
+          # Check for allure.bat in the extracted folder
+          $allurePath = Get-ChildItem -Path "C:\Allure\allure-*/bin" -Recurse | Where-Object { $_.Name -eq "allure.bat" }
           
           if ($allurePath) {
             Write-Host "Allure is successfully installed at: $($allurePath.FullName)"
@@ -69,7 +69,8 @@ jobs:
       # Step 7: Generate Allure Report
       - name: Generate Allure Report
         run: |
-          C:\Allure\allure-*/bin\allure generate reports/allure-report --clean -o allure-report
+          # Call allure.bat for Windows
+          C:\Allure\allure-*/bin\allure.bat generate reports/allure-report --clean -o allure-report
 
       # Step 8: Upload Allure Report as an Artifact
       - name: Upload Allure Report
