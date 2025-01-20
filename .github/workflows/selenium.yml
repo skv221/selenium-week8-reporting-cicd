@@ -80,4 +80,4 @@ jobs:
           name: test reports
           path: |
             allure-report
-            reports/report.html
+            reports
