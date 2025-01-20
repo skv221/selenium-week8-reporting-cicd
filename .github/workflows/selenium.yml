@@ -49,9 +49,17 @@ jobs:
           # Unzip Allure
           Expand-Archive -Path allure.zip -DestinationPath allure
           
+          # Create the directory if it doesn't exist
+          if (-not (Test-Path "C:\allure\bin")) {
+            New-Item -Path "C:\allure\bin" -ItemType Directory
+          }
+          
           # Move Allure to a directory in PATH
           Move-Item -Path allure -Destination C:\allure
-          New-Item -Path C:\allure\bin\allure -Name allure -ItemType SymbolicLink -Target C:\allure\bin\allure.bat
+          
+          # Create the symbolic link for allure
+          New-Item -Path "C:\allure\bin" -Name "allure" -ItemType SymbolicLink -Target "C:\allure\bin\allure.bat"
+
 
       # Step 6: Generate Allure Report
       - name: Generate Allure Report
