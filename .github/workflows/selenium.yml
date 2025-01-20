@@ -49,8 +49,7 @@ jobs:
           Move-Item -Path allure -Destination C:\Allure
           
           # Add Allure to PATH
-          $env:Path += ";C:\Allure\allure-2.16.1\bin"
-          echo "Allure installation successful"
+          [System.Environment]::SetEnvironmentVariable("PATH", "$env:PATH;C:\Allure\allure-2.16.1\bin", [System.EnvironmentVariableTarget]::Machine)
 
       # Step 5: Verify Allure installation
       - name: Verify Allure installation
