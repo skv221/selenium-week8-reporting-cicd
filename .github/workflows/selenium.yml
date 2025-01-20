@@ -47,7 +47,7 @@ jobs:
 
           # Debugging: List the contents of the directory after extraction
           Write-Host "Contents of C:\Allure after extraction:"
-          Get-ChildItem -Path C:\Allure\allure-*\bin
+          Get-ChildItem -Path C:\Allure\allure-2.32.0\bin
 
       # Step 5: Verify Allure Installation
       - name: Verify Allure Installation
