@@ -27,11 +27,7 @@ jobs:
       - name: Install Dependencies
         run: pip install -r requirements.txt
 
-      # Step 4: Run Selenium Tests and Generate Allure Results
-      - name: Run Tests
-        run: pytest test_cases/test_login.py --alluredir=reports/allure-report --html=reports/report.html
-
-      # Step 5: Install Allure
+      # Step 4: Install Allure
       - name: Install Allure
         run: |
           # Fetch the latest Allure release URL
@@ -40,7 +36,7 @@ jobs:
           # Download Allure
           Invoke-WebRequest -Uri $LATEST_URL -OutFile allure.zip
           
-          # Verify the file
+          # Verify the file size
           if ((Get-Item allure.zip).length -lt 100000) {
             Write-Host "Error: Downloaded file size is too small, indicating a failed download."
             exit 1
@@ -49,27 +45,28 @@ jobs:
           # Unzip Allure
           Expand-Archive -Path allure.zip -DestinationPath allure
           
-          # Create the directory if it doesn't exist
-          if (-not (Test-Path "C:\allure\bin")) {
-            New-Item -Path "C:\allure\bin" -ItemType Directory
-          }
-          
-          # Move Allure to a directory in PATH
-          Move-Item -Path allure -Destination C:\allure
+          # Move Allure to C:\Allure
+          Move-Item -Path allure -Destination C:\Allure
           
           # Add Allure to PATH
-          $env:Path += ";C:\allure\bin"
-          
-          # Verify allure command is available
-          allure --version
+          $env:Path += ";C:\Allure\allure-2.16.1\bin"
+          echo "Allure installation successful"
 
-      # Step 6: Generate Allure Report
-      - name: Generate Allure Report
+      # Step 5: Verify Allure installation
+      - name: Verify Allure installation
         run: |
-          # Generate Allure report
-          allure generate reports/allure-report --clean -o allure-report
+          allure --version
+        shell: pwsh
 
-      # Step 7: Upload Allure Report as an Artifact
+      # Step 6: Run Selenium Tests and Generate Allure Results
+      - name: Run Tests
+        run: pytest test_cases/test_login.py --alluredir=reports/allure-report --html=reports/report.html
+
+      # Step 7: Generate Allure Report
+      - name: Generate Allure Report
+        run: allure generate reports/allure-report --clean -o allure-report
+
+      # Step 8: Upload Allure Report as an Artifact
       - name: Upload Allure Report
         uses: actions/upload-artifact@v3
         with:
