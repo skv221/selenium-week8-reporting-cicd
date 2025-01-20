@@ -44,7 +44,7 @@ def openBrowser(browserType, driverPath, isHeadless):
         else:
             return webdriver.Edge(service = edgeService(EdgeChromiumDriverManager().install()))
     elif browserType == 'cloud':
-        browserStack = read_json("config\\browserstack_config.json")
+        browserStack = read_json("config/browserstack_config.json")
         username = browserStack["browserstack"]["username"]
         access_key = browserStack["browserstack"]["access_key"]
         capabilities = browserStack["capabilities"]

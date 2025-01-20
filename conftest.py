@@ -5,7 +5,7 @@ from utilities.logger import logger
 import pytest
 import time
 
-config = read_json("config\config.json")
+config = read_json("config/config.json")
 
 browserType = config["browser"]["type"]
 isHeadless = config["browser"]["headless"]

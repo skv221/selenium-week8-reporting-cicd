@@ -4,7 +4,7 @@ from keywords.keywords import xstr
 import pytest
 import allure
 
-config = read_json("config\config.json")
+config = read_json("config/config.json")
 
 browserType = config["browser"]["type"]
 testDataPath = config["test_data"]["file_path"]
